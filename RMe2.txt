@@ -1,0 +1,104 @@
+React Native App ..............
+
+--- GUESS A NUMBER APP ---
+
+...............................
+Section 4: Components, Styling, Layouts - Building Real Apps
+
+
+------------ Notes ------------
+
+will learn about:
+	- components
+		@ built-in --> view, text, image ...
+		@ Custom components
+	- styling and layout
+		@ components styling
+		@ layout with flexbox
+	- native API modules
+		@ access to native feature of device like camera, maps, mic ...
+
+*
+will learn in order:
+	- build other app
+	- more in components
+	- images and custom fonts
+	- more styles and layouts
+*
+
+API: is interface that enable you to communicate with system (هو واجهة المستخدم التي تمكنه من التواصل مع النظام)
+	فهو الذي يقوم بارسال الطلب وجلب الاستجابة على الطلب ويتخاطب مع النظام
+	مثل عليه/ انت في المطعم تريد طلب شيء من المنيو وطلبك يجب ان يسلم للمطبخ والمطبخ يجب ان يسلمك الطعام فالوسيط الذي سوي يقوم بتوصيل هذه العملية هو النادل حيث ياخذ منك الطلب ويوصله للمطبخ وياخذ الطعام من المطبخ اليك فالنادل هو واجهتك للتخاطب مع المطبخ.
+
+
+**************************************************************
+core structure of component in RN
+-----------------
+
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+
+const compName = props => {
+    return (
+        <View style={styles.screen}>
+            
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        padding: 10,
+        alignItems: 'center',
+    }
+});
+
+export default compName;
+**************************************************************
+
+- React Native in the end is all about translating React components (like <View> or <Text>) to native widgets (like UIView or widget.view)
+- These native widgets don't understand CSS. They have nothing to do with the web, HTML or anything like that!
+- not all React Native components support all style properties.
+- <Text> doesn't support flexbox-related properties
+
+- spread operator: a modern Javascript feature which pulls all the key-value pairs of an object out of that object and adds it to a new surrounding object.
+
+- There are important differences - <View> supports different style properties than <Text> does (e.g. Flexbox!)
+- <View> supports Flexbox which is what you need to lay things out.
+- Android requires elevantion to add a shadow effect.
+- You have to build and style your own components with the core building blocks you're getting.
+- <View>, <Text> etc are all just compiled down to native widgets in the end. You can't configure what those widgets don't accept.
+- can import more than components from react native as we can call an Object or API like Alart, Keyboard, etc...
+- recursion concept: calling a function from inside the function itself.
+- useState is hook that asign value to var by function with/without init value
+- useRef is hook that allow to create object which can bind to inputs elements in jsx to get access to them in code 
+	also allow to define value which urvives component re-renders
+- expo-font: is a package which gives you font utilities, so utilities that allow you to load fonts and you import everything from that package and bundle it together in this font object
+
+- *import {AppLoading} from 'expo';* 
+	's a component which will basically prolong the default loading screen, the splash screen users see anyways when the app is launching, it will prolong this screen to stay active until a certain task of your choice is done
+	like for example until fetching fonts is done.
+
+To Add Font in project 
+	1- add font files to assets/fonts/___.ttf the file should be in ttf formate
+	2- two import
+		- import {AppLoading} from 'expo';
+		- import * as Font from 'expo-font';
+	3- create function that hold font object:
+		  const fetchFonts = () => {
+			return Font.loadAsync({
+			'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+			'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+			});
+		};
+	4- useState to manage app loader and their logic
+		  const [dataLoader,setDataLoader] = useState(false)
+		   if(!dataLoader){
+				return <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoader(true)} onError={(console.error('font loading error'))} />
+			}
+	5- use the font object in styling section in fontFamily: 'fontObjectName', 
+	OR
+	can create simple  styled textcomponent and use it instead of native text
+	OR 
+	by create constant 
